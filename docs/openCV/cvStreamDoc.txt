@@ -1,0 +1,82 @@
+This module is used to managed threads for reading frames from cameras. Multi-threading boosts the speed of main program to a significant 
+amount. This speed up is quite essential when we are using systems with limited resources (like single board computers).
+
+MODULE LAYOUT:
+
+videoStreamCV
+|
+|
+|___ videoStreamCV
+     | TYPE: CLASS
+     | DESCRIPTION : This class contains all the functions to manage the camera multi-threading
+     |
+     |
+     |
+     |___ ready
+     |     TYPE: CLASS VARIABLES
+     |     DEFAULT VALUE: 0
+     |     DESCRIPTION: This variable at indicates whether the camera is active or not. A 0 value means that the camera is not active while
+     |                  1 means that the camera is active. This variable is checked before starting the thread to read frames from 
+     |                  from the camera. Only the class constructor assigns it a value 1 when the camera is started successfully (i.e. with
+     |                  -out any exceptions). If the camera does not start then the calling script can never start the thread. When we stop
+     |                  an already running thread by calling the stop() function then also the ready variable retains the value 1. Thus,
+     |                  the calling script can start, stop and restart threads without having to create new objects of this class.
+     |
+     | 
+     |___ frame
+     |      TYPE: CLASS VARIABLE
+     |      DEFAULT VALUE:  a three dimensional numpy array; size of eacch dimension is 2 and every object is 0 (This has importance)
+     |      DESCRIPTION: This varaible holds the latest frame read from the camera once the thread has started. Assigning a numpy array
+     |                   to it as the deafault value prevents comparisson related errors when using the module.
+     |                   (For more information about this refer to numpy and python3 official documentations)
+     | 
+     |
+     |___ stopped
+     |      TYPE: CLASS VARIABLE
+     |      DEFAULT VALUE: False
+     |      DESCRIPTION : This variable is used to stop the camera thread when it's job is done. The thread function loop checks for it's
+     |                    value in every iteration and break out once its value is True. It is assigned True using the stop() function
+     |                    which serves obvious purposes.
+     |
+     |___ other class variables are not important for the user as they are used for internal operations
+     |
+     |
+     |___ __init__()
+     |      TYPE : CLASS CONSTRUCTOR
+     |      PARAMETERS : 
+     |        1. source : this is the index number os camera to use for getting the video frames
+     |      RETURNS: NOTHING
+     |      DESCRIPTION:
+     |        This function starts the camera and initializes the class variables with required values. If the constructor fails to start the
+     |        camera then it ensures that ready variable is 0 so that other functions cannot be used.
+     |
+     |
+     |___ start()
+     |      TYPE: CLASS FUNCTION
+     |      PARAMETERS:NOTHING
+     |      RETURNS:
+     |        1 if the thread starts successfully
+     |        0 otherwise
+     |      DESCRIPTION: This function starts the thread if the camera had started successfully. 
+     | 
+     |
+     |
+     |___ update()
+     |      TYPE: THREAD TARGET FUNCTION
+     |      DESCRIPTION: This function reads frames from the camera stream and saves it into the frame class variable, until stopped.
+     |
+     |
+     |___read()
+     |     TYPE: CLASS FUNCTION
+     |     PARAMETERS: NONE
+     |     RETURNS: numpy frame
+     |     DESCRIPTION: This function simply returns the value of frame class variable. Since numpy arrays are mutalbe thus, the function
+     |                  actually performs a deepcopy before returning the value. Not doing this might will might result changes in the image
+     |                  frame array inside our main program.
+     |
+     |
+     |___stop()
+           TYPE: CLASS FUNCTION
+           PARAMETERS: NONE
+           RETURNS: NOTHING
+           DESCRIPTION: stops any ongoing thread by setting the value of stopped variable to True. This breaks the infinite loop of the thread.
