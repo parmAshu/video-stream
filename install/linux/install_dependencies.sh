@@ -11,12 +11,14 @@ if [ $? -eq 0 ]; then
   sleep 3
   sudo apt-get update
   sudo apt-get upgrade
+
   sudo apt-get install python3
   sudo apt install python3-pip
+
   sudo apt-get install cmake
   sudo apt-get install libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev 
   sudo apt-get install python3-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev
-  sudo apt-get install python3-opencv python-opencv
+
   sudo pip3 install opencv-python
   sudo pip3 install pillow
 else

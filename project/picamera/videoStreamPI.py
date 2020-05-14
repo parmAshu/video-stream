@@ -11,7 +11,7 @@ class videoStreamPI:
 
 
   #the class initializer 
-  def __init__(self,resolution=(640,480),framerate=20):
+  def __init__(self,resolution='720p',framerate=40):
     self.ready=0
     self.frame=numpy.zeros((2,2,2))
     self.stopped=False
