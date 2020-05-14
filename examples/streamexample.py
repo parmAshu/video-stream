@@ -1,11 +1,9 @@
-import videoStreamCV
+import videoStreamCV as vs
 import cv2
 
-camera=videoStreamCV.videoStreamCV()
+camera=vs.videoStreamCV()
 if not camera.start():
   print("error while starting thread")
-  if camera.ready:
-    camera.stop()
 
 else:
   while True:
