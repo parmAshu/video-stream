@@ -5,7 +5,7 @@ wget -q --spider https://google.com
 
 echo "CONNECTION TEST EXIT STATUS - $?"
 
-if [ $? -eq 0]; then
+if [ $? -eq 0 ]; then
 
   echo "INSTALLING..."
   sleep 3
@@ -14,10 +14,17 @@ if [ $? -eq 0]; then
   sudo apt-get install python3
   sudo apt install python3-pip
   sudo apt-get install cmake
+
+  pip3 install opencv-python
+
   sudo apt-get install libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev 
   sudo apt-get install python3-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev
+  sudo apt-get install libatlas-base-dev
+  sudo apt-get install -y libqtgui4
+  sudo apt-get install libqt4-test
+  sudo apt-get install libhdf5-dev libhdf5-serial-dev
   sudo apt-get install python3-picamera
-  pip3 install opencv-python
+    
   pip3 install pillow
   pip3 install picamera[array]
 
